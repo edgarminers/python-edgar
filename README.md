@@ -1,4 +1,4 @@
-Download the SEC EDGAR fillings index with python-edgar
+Download the SEC EDGAR fillings index
 =========
 
 python-edgar downloads the EDGAR fillings index from the SEC FTP. The index is comprised of IDX files. An IDX file is a csv-like file that contains the following information:
