@@ -1,3 +1,8 @@
+On December 30, 2016, FTP services for retrieving EDGAR filing documents were permanently retired.
+
+https://www.sec.gov/edgar/searchedgar/accessing-edgar-data.htm
+
+
 Download the SEC EDGAR fillings index
 =========
 
