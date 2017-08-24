@@ -1,3 +1,5 @@
+__python-edgar will be upgraded soon to v2 to work with EDGAR data served over HTTPS instead of FTP. Thanks!__
+
 On December 30, 2016, FTP services for retrieving EDGAR filing documents were permanently retired.
 
 https://www.sec.gov/edgar/searchedgar/accessing-edgar-data.htm
