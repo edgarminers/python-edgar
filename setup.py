@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name='python-edgar',
-    version='2.0',
+    version='2.3',
     description='Download the SEC fillings index from EDGAR since 1993',
     long_description=read('README.md'),
     author='Edouard Swiac',
