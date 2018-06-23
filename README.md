@@ -16,7 +16,15 @@ Once `python-edgar` is finished downloading index files, you can open an index f
 
 `python-edgar` can be used as a library called from another python script, or as a standalone script.
 
-## Using python-edgar as a library
+## Features 
+- Fast: parallel downloads with `multiprocessing`. The more CPUs you have the faster it'll go.
+- Efficient: retrieve compressed archives instead of raw index file that are 10 times bigger
+- Import as a library in your python project or run as a standalone script 
+- Python 2 & 3 Compatible with external 0 dependencies.
+
+## Usage
+
+### Using python-edgar as a library
 
 Install from pip in a virtualenv
 ```sh
@@ -44,7 +52,7 @@ Output
 2018-06-23 12:41:50,377 - INFO - Files downloaded in /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpr2Nk3o
 ```
 
-## Using python-edgar as a standalone script
+### Using python-edgar as a standalone script
 
 - Download this repository as a zip ("Clone or Download" green button, > Download as zip.) 
 - Open your terminal inside that directory and run `python run.py -h`. You can specify a destination directory for downloaded index files like `-d edgar-idx` (defaults to a temporary directory) and/or specify the year from which you want to build the index with `-y 2017` (defaults to current year).
@@ -65,8 +73,74 @@ Output
 2018-06-23 12:41:50,377 - INFO - Files downloaded in /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpr2Nk3o
 ```
 
+## Stitch quarterly files to a master file
 
-### License
+`python-edgar` does only one thing and does it well: getting and cleaning uncompressed quarterly index files to your computer. Use command line tools, in the spirit of unix philosophy, to stitch these index files together and create our master index file.
+
+In this example, we called `python run.py` without arguments. It'll download every quarterly index file since 1993.
+
+```shell
+ python run.py -y 1993
+ 
+2018-06-23 13:00:16,855 - DEBUG - downloads will be saved to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7
+2018-06-23 13:00:16,855 - DEBUG - downloading files since 1993
+2018-06-23 13:00:16,856 - INFO - 102 index files to retrieve
+2018-06-23 13:00:16,879 - DEBUG - worker count: 4
+2018-06-23 13:00:18,814 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/2017/QTR4/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/2017-QTR4.tsv
+2018-06-23 13:00:19,026 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/2017/QTR3/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/2017-QTR3.tsv
+2018-06-23 13:00:19,157 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/2018/QTR2/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/2018-QTR2.tsv
+2018-06-23 13:00:19,543 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/2018/QTR1/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/2018-QTR1.tsv
+2018-06-23 13:00:20,521 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/2017/QTR2/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/2017-QTR2.tsv
+2018-06-23 13:00:20,719 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/2016/QTR4/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/2016-QTR4.tsv
+2018-06-23 13:00:21,016 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/2016/QTR3/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/2016-QTR3.tsv
+2018-06-23 13:00:21,134 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/2017/QTR1/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/2017-QTR1.tsv
+2018-06-23 13:00:22,099 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/2016/QTR2/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/2016-QTR2.tsv
+(...)
+dcw07x6zrrr0000gn/T/tmpcF1rx7/1993-QTR2.tsv
+2018-06-23 13:00:54,378 - INFO - > downloaded https://www.sec.gov/Archives/edgar/full-index/1993/QTR1/master.zip to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7/1993-QTR1.tsv
+2018-06-23 13:00:54,423 - INFO - complete
+2018-06-23 13:00:54,424 - INFO - Files downloaded in /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7
+```
+
+Inspect the directory where our files where downloaded:
+```shell
+$ ls -lh /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7
+total 4964656
+drwx------  104 eswiac  staff   3.3K Jun 23 13:00 .
+drwxr-xr-x  342 eswiac  staff    11K Jun 23 13:01 ..
+-rw-r--r--    1 eswiac  staff   585B Jun 23 13:00 1993-QTR1.tsv
+-rw-r--r--    1 eswiac  staff   580B Jun 23 13:00 1993-QTR2.tsv
+-rw-r--r--    1 eswiac  staff   1.0K Jun 23 13:00 1993-QTR3.tsv
+-rw-r--r--    1 eswiac  staff   2.8K Jun 23 13:00 1993-QTR4.tsv
+-rw-r--r--    1 eswiac  staff   2.9M Jun 23 13:00 1994-QTR1.tsv
+-rw-r--r--    1 eswiac  staff   2.3M Jun 23 13:00 1994-QTR2.tsv
+(...)
+-rw-r--r--    1 eswiac  staff    27M Jun 23 13:00 2017-QTR3.tsv
+-rw-r--r--    1 eswiac  staff    27M Jun 23 13:00 2017-QTR4.tsv
+-rw-r--r--    1 eswiac  staff    41M Jun 23 13:00 2018-QTR1.tsv
+-rw-r--r--    1 eswiac  staff    31M Jun 23 13:00 2018-QTR2.tsv
+```
+
+Head to that directory so we can merge these files into a master file using `cat`
+```shell
+$ cd  /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpcF1rx7
+$ cat *.tsv > master.tsv
+$ du -h master.tsv
+2.3G	master.tsv
+```
+
+Now you have this master index file. It's not sorted but that's easy to do (hint: Look into the `sort` command) 
+
+## Query the master index with `q`
+https://github.com/harelba/q allows you to run SQL directly on tabular data. 
+
+Use with caution: q does not use indexes so running queries against the master index will be very slow since it's rather large. Sorting the master index or narrowing the data to a smaller subset will make search faster. Ultimately you want to load the master index file into a proper database that's able to handle the size.
+
+Some queries you may want to try
+- `q "SELECT COUNT(1) FROM 1999-QTR4.tsv" `
+- `q -d"|" "SELECT * FROM master.tsv where c1 = 1418091 and c3 = '10-Q' order by c4"`
+
+## License
 
 MIT
 
