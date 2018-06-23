@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/edouardswiac/python-edgar.svg?branch=master)](https://travis-ci.org/edouardswiac/python-edgar)
-
+![PyPI](https://img.shields.io/pypi/v/python-edgar.svg)
+![PyPI - License](https://img.shields.io/pypi/l/python-edgar.svg)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/python-edgar.svg)
 
 # Build a master index of SEC filings since 1993 with `python-edgar`
 
