@@ -1,15 +1,23 @@
-from distutils.core import setup
+from setuptools import setup
+import os
+
+
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
 
 setup(
     name='python-edgar',
-    version='2.0',
-    description='Download the SEC EDGAR index since 1993 ' +
-                '(company name, form type, EDGAR form url)',
+    version='2.2',
+    description='Download the SEC fillings index from EDGAR since 1993',
+    long_description=read('README.md'),
     author='Edouard Swiac',
     author_email='edouard.swiac@gmail.com',
     url='https://github.com/edouardswiac/python-edgar',
     packages=['edgar'],
-    license="MIT License",
+    scripts=['run.py'],
+    license="MIT",
+    keywords="research sec edgar filings 10k 10q 13d 8k",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
@@ -18,8 +26,13 @@ setup(
         "Intended Audience :: Financial and Insurance Industry",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 3"
+        "Programming Language :: Python :: 3",
         "Topic :: Office/Business :: Financial",
         "Topic :: Office/Business :: Financial :: Investment"
-     ],
+    ],
+    project_urls={
+        "Bug Tracker": "https://github.com/edouardswiac/python-edgar/issues",
+        "Documentation": "https://github.com/edouardswiac/python-edgar/blob/master/README.md",
+        "Source Code": "https://github.com/edouardswiac/python-edgar/",
+    }
 )
