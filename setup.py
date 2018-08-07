@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='python-edgar',
-    version='2.4',
+    version='2.5',
     description='Download the SEC fillings index from EDGAR since 1993',
     long_description=long_description,
     author='Edouard Swiac',
