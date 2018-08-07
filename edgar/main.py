@@ -94,7 +94,7 @@ def _download(file, dest):
                     _skip_header(z)
                     lines = z.read()
                     if IS_PY3:
-                        lines = str(lines, "utf-8")
+                        lines = str(lines, "latin-1")
                     lines = map(lambda line: _append_html_version(line),
                                 lines.splitlines())
                     idxfile.write('\n'.join(lines))
