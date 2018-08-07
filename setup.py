@@ -1,16 +1,14 @@
 from setuptools import setup
-import os
 
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(
     name='python-edgar',
-    version='2.3',
+    version='2.4',
     description='Download the SEC fillings index from EDGAR since 1993',
-    long_description=read('README.md'),
+    long_description=long_description,
     author='Edouard Swiac',
     author_email='edouard.swiac@gmail.com',
     url='https://github.com/edouardswiac/python-edgar',
@@ -32,7 +30,8 @@ setup(
     ],
     project_urls={
         "Bug Tracker": "https://github.com/edouardswiac/python-edgar/issues",
-        "Documentation": "https://github.com/edouardswiac/python-edgar/blob/master/README.md",
+        "Documentation":
+        "https://github.com/edouardswiac/python-edgar/blob/master/README.md",
         "Source Code": "https://github.com/edouardswiac/python-edgar/",
     }
 )
