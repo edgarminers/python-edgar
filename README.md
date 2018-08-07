@@ -133,6 +133,18 @@ $ du -h master.tsv
 
 Now you have this master index file. It's not sorted but that's easy to do (hint: Look into the `sort` command) 
 
+## Grab filings from a specific company
+Now that we have downloaded the index files it becomes easy, with a bit of command line scripting, to quickly filter by company and extract URLs to the filings we want with `grep` . In the following example we grep by CIK (1000045), store the output in an intermediate text file, which we re-open with cat and grep again by form 10-K. Prefix the paths with https://www.sec.gov/Archives/ and you'll get the full URL.
+
+```shell
+eswiac@mbp python-edgar (master) $ grep -h 1000045 /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpvwOzOU/* > 1000045.txt
+eswiac@mbp python-edgar (master) $ cat 1000045.txt | grep -h 10-K
+1000045|NICHOLAS FINANCIAL INC|10-K|2015-06-15|edgar/data/1000045/0001193125-15-223218.txt|edgar/data/1000045/0001193125-15-223218-index.html
+1000045|NICHOLAS FINANCIAL INC|10-K|2016-06-14|edgar/data/1000045/0001193125-16-620952.txt|edgar/data/1000045/0001193125-16-620952-index.html
+1000045|NICHOLAS FINANCIAL INC|10-K|2017-06-14|edgar/data/1000045/0001193125-17-203193.txt|edgar/data/1000045/0001193125-17-203193-index.html
+1000045|NICHOLAS FINANCIAL INC|10-K|2018-06-27|edgar/data/1000045/0001193125-18-205637.txt|edgar/data/1000045/0001193125-18-205637-index.html
+```
+
 ## Query the master index with `q`
 https://github.com/harelba/q allows you to run SQL directly on tabular data. 
 
