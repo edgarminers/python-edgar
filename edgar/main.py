@@ -8,6 +8,7 @@ import tempfile
 import logging
 import os.path
 import sys
+import io
 
 EDGAR_PREFIX = "https://www.sec.gov/Archives/"
 SEP = "|"
@@ -90,11 +91,11 @@ def _download(file, dest):
         with tempfile.TemporaryFile(mode='w+b') as tmp:
             tmp.write(_url_get(url))
             with zipfile.ZipFile(tmp).open("master.idx") as z:
-                with open(dest+dest_name, 'w+') as idxfile:
+                with io.open(dest+dest_name, 'w+', encoding='utf-8') as idxfile:
                     _skip_header(z)
                     lines = z.read()
                     if IS_PY3:
-                        lines = str(lines, "latin-1")
+                        lines = lines.decode("latin-1")
                     lines = map(lambda line: _append_html_version(line),
                                 lines.splitlines())
                     idxfile.write('\n'.join(lines))
