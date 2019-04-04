@@ -9,6 +9,7 @@ setup(
     version='2.6',
     description='Download the SEC fillings index from EDGAR since 1993',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Edouard Swiac',
     author_email='edouard.swiac@gmail.com',
     url='https://github.com/edouardswiac/python-edgar',
