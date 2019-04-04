@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='python-edgar',
-    version='2.5',
+    version='2.6',
     description='Download the SEC fillings index from EDGAR since 1993',
     long_description=long_description,
     author='Edouard Swiac',
@@ -15,7 +15,7 @@ setup(
     packages=['edgar'],
     scripts=['run.py'],
     license="MIT",
-    keywords="research sec edgar filings 10k 10q 13d 8k",
+    keywords="edgar sec filings 10k 10q 13d 8k",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
