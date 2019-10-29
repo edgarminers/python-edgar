@@ -75,6 +75,14 @@ Output
 2018-06-23 12:41:50,377 - INFO - Files downloaded in /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpr2Nk3o
 ```
 
+### Common issues
+
+> RuntimeError:
+  An attempt has been made to start a new process before the
+  current process has finished its bootstrapping phase.
+
+See https://pytorch.org/docs/stable/notes/windows.html#multiprocessing-error-without-if-clause-protection
+
 ## Stitch quarterly files to a master file
 
 `python-edgar` does only one thing and does it well: getting and cleaning uncompressed quarterly index files to your computer. Use command line tools, in the spirit of unix philosophy, to stitch these index files together and create our master index file.
