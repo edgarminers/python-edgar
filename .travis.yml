@@ -10,4 +10,4 @@ python:
 # command to install dependencies
 # command to run tests
 script:
-  - python run.py -y2018
+  - python3 test.py
