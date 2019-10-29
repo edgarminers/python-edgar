@@ -22,7 +22,7 @@ Once `python-edgar` is finished downloading index files, you can open an index f
 - Fast: parallel downloads with `multiprocessing`. The more CPUs you have the faster it'll go.
 - Efficient: retrieve compressed archives instead of raw index file that are 10 times bigger
 - Import as a library in your python project or run as a standalone script 
-- Python 2 & 3 Compatible with external 0 dependencies.
+- Python 3 only with 0 external dependencies (Python 3 only as of v3.0.0)
 
 ## Usage
 
