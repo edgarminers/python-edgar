@@ -83,6 +83,9 @@ Output
 
 See https://pytorch.org/docs/stable/notes/windows.html#multiprocessing-error-without-if-clause-protection
 
+> I am using python 2 ...
+
+Python 2 support has been dropped as of October 2019. See https://pythonclock.org. 
 ## Stitch quarterly files to a master file
 
 `python-edgar` does only one thing and does it well: getting and cleaning uncompressed quarterly index files to your computer. Use command line tools, in the spirit of unix philosophy, to stitch these index files together and create our master index file.

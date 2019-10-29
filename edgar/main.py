@@ -25,7 +25,7 @@ def _worker_count():
 
 
 def _get_current_quarter():
-    return "QTR%s" % ((datetime.date.today().month-1)//3 + 1)
+    return "QTR%s" % ((datetime.date.today().month - 1) // 3 + 1)
 
 
 def _quarterly_idx_list(since_year=1993):
@@ -34,7 +34,7 @@ def _quarterly_idx_list(since_year=1993):
     since 1993 until this previous quarter
     """
     logging.debug("downloading files since %s" % since_year)
-    years = range(since_year, datetime.date.today().year+1)
+    years = range(since_year, datetime.date.today().year + 1)
     quarters = ["QTR1", "QTR2", "QTR3", "QTR4"]
     history = list((y, q) for y in years for q in quarters)
     history.reverse()
@@ -43,14 +43,18 @@ def _quarterly_idx_list(since_year=1993):
 
     while history:
         _, q = history[0]
-        if (q == quarter):
+        if q == quarter:
             break
         else:
             history.pop(0)
 
     return [
-        (EDGAR_PREFIX+"edgar/full-index/%s/%s/master.zip" % (x[0], x[1]),
-         "%s-%s.tsv" % (x[0], x[1])) for x in history]
+        (
+            EDGAR_PREFIX + "edgar/full-index/%s/%s/master.zip" % (x[0], x[1]),
+            "%s-%s.tsv" % (x[0], x[1]),
+        )
+        for x in history
+    ]
 
 
 def _append_html_version(line):
@@ -68,10 +72,12 @@ def _url_get(url):
     if IS_PY3:
         # python 3
         import urllib.request
+
         content = urllib.request.urlopen(url).read()
     else:
         # python 2
         import urllib2
+
         content = urllib2.urlopen(url).read()
     return content
 
@@ -88,19 +94,19 @@ def _download(file, dest):
     url = file[0]
     dest_name = file[1]
     if url.endswith("zip"):
-        with tempfile.TemporaryFile(mode='w+b') as tmp:
+        with tempfile.TemporaryFile(mode="w+b") as tmp:
             tmp.write(_url_get(url))
             with zipfile.ZipFile(tmp).open("master.idx") as z:
-                with io.open(dest+dest_name, 'w+', encoding='utf-8') as idxfile:
+                with io.open(dest + dest_name, "w+", encoding="utf-8") as idxfile:
                     _skip_header(z)
                     lines = z.read()
                     if IS_PY3:
                         lines = lines.decode("latin-1")
-                    lines = map(lambda line: _append_html_version(line),
-                                lines.splitlines())
-                    idxfile.write('\n'.join(lines))
-                    logging.info("> downloaded %s to %s%s" % (url,
-                                                              dest, dest_name))
+                    lines = map(
+                        lambda line: _append_html_version(line), lines.splitlines()
+                    )
+                    idxfile.write("\n".join(lines))
+                    logging.info("> downloaded %s to %s%s" % (url, dest, dest_name))
     else:
         raise logging.error("python-edgar only supports zipped index files")
 

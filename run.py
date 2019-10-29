@@ -13,7 +13,7 @@ logger.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler(sys.stdout)
 ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -25,17 +25,19 @@ if __name__ == "__main__":
         "--from-year",
         type=int,
         dest="year",
-        help='The year from which to start downloading ' +
-             'the filing index. Default to current year',
-        default=datetime.date.today().year)
+        help="The year from which to start downloading "
+        + "the filing index. Default to current year",
+        default=datetime.date.today().year,
+    )
 
     parser.add_argument(
         "-d",
         "--directory",
         dest="directory",
-        help='A directory where the filing index files will' +
-             'be downloaded to. Default to a temporary directory',
-        default=tempfile.mkdtemp())
+        help="A directory where the filing index files will"
+        + "be downloaded to. Default to a temporary directory",
+        default=tempfile.mkdtemp(),
+    )
 
     args = parser.parse_args()
 
