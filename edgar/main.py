@@ -111,7 +111,7 @@ def _download(file, dest, skip_file):
         raise logging.error("python-edgar only supports zipped index files")
 
 
-def download_index(dest, since_year, *, skip_all_present_except_last=False):
+def download_index(dest, since_year, skip_all_present_except_last=False):
     """
     Convenient method to download all files at once
     """
