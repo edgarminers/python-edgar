@@ -22,7 +22,7 @@ Once `python-edgar` is finished downloading index files, you can open an index f
 - Fast: parallel downloads with `multiprocessing`. The more CPUs you have the faster it'll go.
 - Efficient: retrieve compressed archives instead of raw index file that are 10 times bigger
 - Import as a library in your python project or run as a standalone script 
-- Python 2 & 3 Compatible with external 0 dependencies.
+- Python 3 only with 0 external dependencies (Python 3 only as of v3.0.0)
 
 ## Usage
 
@@ -75,6 +75,17 @@ Output
 2018-06-23 12:41:50,377 - INFO - Files downloaded in /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpr2Nk3o
 ```
 
+### Common issues
+
+> RuntimeError:
+  An attempt has been made to start a new process before the
+  current process has finished its bootstrapping phase.
+
+See https://pytorch.org/docs/stable/notes/windows.html#multiprocessing-error-without-if-clause-protection
+
+> I am using python 2 ...
+
+Python 2 support has been dropped as of October 2019. See https://pythonclock.org. 
 ## Stitch quarterly files to a master file
 
 `python-edgar` does only one thing and does it well: getting and cleaning uncompressed quarterly index files to your computer. Use command line tools, in the spirit of unix philosophy, to stitch these index files together and create our master index file.
