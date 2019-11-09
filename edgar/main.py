@@ -82,17 +82,23 @@ def _url_get(url):
     return content
 
 
-def _download(file, dest):
+def _download(file, dest, skip_file):
     """
     Download an idx archive from EDGAR
     This will read idx files and unzip
     archives + read the master.idx file inside
+
+    when skip_file is True, it will skip the file if it's already present.
     """
     if not dest.endswith("/"):
         dest = "%s/" % dest
 
     url = file[0]
     dest_name = file[1]
+    if skip_file and os.path.exists(dest+dest_name):
+        logging.info("> Skipping %s" % (dest_name))
+        return
+
     if url.endswith("zip"):
         with tempfile.TemporaryFile(mode="w+b") as tmp:
             tmp.write(_url_get(url))
@@ -111,7 +117,7 @@ def _download(file, dest):
         raise logging.error("python-edgar only supports zipped index files")
 
 
-def download_index(dest, since_year):
+def download_index(dest, since_year, skip_all_present_except_last=False):
     """
     Convenient method to download all files at once
     """
@@ -125,8 +131,12 @@ def download_index(dest, since_year):
     logging.debug("worker count: %d", worker_count)
     pool = multiprocessing.Pool(worker_count)
 
-    for file in tasks:
-        pool.apply_async(_download, (file, dest))
+    for i, file in enumerate(tasks):
+        skip_file = skip_all_present_except_last
+        if i == 0:
+            # First one should always be re-downloaded
+            skip_file = False
+        pool.apply_async(_download, (file, dest, skip_file))
 
     pool.close()
     pool.join()
