@@ -111,7 +111,7 @@ def _download(file, dest, skip_file):
                     lines = map(
                         lambda line: _append_html_version(line), lines.splitlines()
                     )
-                    idxfile.write("\n".join(lines))
+                    idxfile.write("\n".join(lines)+"\n")
                     logging.info("> downloaded %s to %s%s" % (url, dest, dest_name))
     else:
         raise logging.error("python-edgar only supports zipped index files")
