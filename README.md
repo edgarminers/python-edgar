@@ -83,6 +83,17 @@ Output
 
 See https://pytorch.org/docs/stable/notes/windows.html#multiprocessing-error-without-if-clause-protection
 
+You will need to wrap your code in `main()` function to be able to run it on Windows:
+
+```python
+def main(): 
+    import edgar
+    edgar.download_index(".", 2020, skip_all_present_except_last=False)    
+
+if __name__ == '__main__':
+    main()    
+```
+
 > I am using python 2 ...
 
 Python 2 support has been dropped as of October 2019. See https://pythonclock.org. 
