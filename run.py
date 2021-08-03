@@ -43,9 +43,21 @@ if __name__ == "__main__":
         default=tempfile.mkdtemp(),
     )
 
+    parser.add_argument(
+        '-ua',
+        "-user-agent",
+        dest="ua",
+        help="The User Agent to set. This must be set properly "
+        + "else the SEC may temporarily ban you. See https://www.sec.gov/os/accessing-edgar-data"
+    )
+    
     args = parser.parse_args()
 
+    if args.ua is None:
+        logger.error("A user agent is required. See https://www.sec.gov/os/accessing-edgar-data")
+        sys.exit(1)
+        
     logger.debug("downloads will be saved to %s" % args.directory)
 
-    edgar.download_index(args.directory, args.year)
+    edgar.download_index(args.directory, args.year, args.ua)
     logger.info("Files downloaded in %s" % args.directory)
