@@ -14,6 +14,7 @@ import time
 EDGAR_PREFIX = "https://www.sec.gov/Archives/"
 SEP = "|"
 IS_PY3 = sys.version_info[0] >= 3
+REQUEST_BUDGET_MS = 200
 
 def _get_current_quarter():
     return "QTR%s" % ((datetime.date.today().month - 1) // 3 + 1)
@@ -109,6 +110,9 @@ def _download(file, dest, skip_file, user_agent):
         raise logging.error("python-edgar only supports zipped index files")
 
 
+def _get_millis():
+    return round(time.time() * 1000)
+
 def download_index(dest, since_year, user_agent, skip_all_present_except_last=False):
     """
     Convenient method to download all files at once
@@ -118,19 +122,21 @@ def download_index(dest, since_year, user_agent, skip_all_present_except_last=Fa
 
     tasks = _quarterly_idx_list(since_year)
     logging.info("%d index files to retrieve", len(tasks))
-    last_download_at = 0
+    last_download_at = _get_millis()
     for i, file in enumerate(tasks):
         skip_file = skip_all_present_except_last
         if i == 0:
             # First one should always be re-downloaded
             skip_file = False
-        now = time.time()
-        elapsed = last_download_at + time.time()
         # naive: 200ms or 5QPS serialized
-        if elapsed < 200: 
-            time.sleep(200-elapsed)
+        start = _get_millis()
         _download(file, dest, skip_file, user_agent)
-        last_download_at = time.time()
+        elapsed = _get_millis() - start
+        if elapsed < REQUEST_BUDGET_MS:
+            sleep_for = REQUEST_BUDGET_MS-elapsed
+            logging.info("sleeping for %dms because we are going too fast (previous request took %dms", sleep_for, elapsed)
+            time.sleep(sleep_for/1000)
+        last_download_at = _get_millis()
 
 
     logging.info("complete")
