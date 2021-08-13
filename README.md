@@ -36,7 +36,7 @@ pip install python-edgar
 Call the library
 ```python
 import edgar
-edgar.download_index(download_directory, since_year, skip_all_present_except_last=False)
+edgar.download_index(download_directory, since_year, user_agent, skip_all_present_except_last=False)
 ```
 Output
 ```shell
@@ -60,7 +60,7 @@ Output
 - Open your terminal inside that directory and run `python run.py -h`. You can specify a destination directory for downloaded index files like `-d edgar-idx` (defaults to a temporary directory) and/or specify the year from which you want to build the index with `-y 2017` (defaults to current year).
 
 ```shell
- $ python run.py -y 2017
+ $ python run.py -y 2017 -ua "MyCompany edward@mycompany.com"
 2018-06-23 12:41:46,451 - DEBUG - downloads will be saved to /var/folders/bv/2zbdkyyj14766dcw07x6zrrr0000gn/T/tmpr2Nk3o
 2018-06-23 12:41:46,451 - DEBUG - downloading files since 2017
 2018-06-23 12:41:46,451 - INFO - 6 index files to retrieve
