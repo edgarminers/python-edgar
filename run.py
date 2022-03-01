@@ -1,5 +1,4 @@
 from __future__ import print_function
-import os
 import datetime
 import tempfile
 import sys
@@ -44,11 +43,22 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        '-ua',
-        "-user-agent",
+        "-ua",
+        "--user-agent",
         dest="ua",
         help="The User Agent to set. This must be set properly "
         + "else the SEC may temporarily ban you. See https://www.sec.gov/os/accessing-edgar-data"
+    )
+
+    parser.add_argument(
+        "-s",
+        "--skip-all-present-except-last",
+        action="store_true",
+        dest="skip",
+        help="Specify this flag to skip downloading filing index"
+        + " files that are already present. Only the most recent"
+        + " file is downloaded. If not specified all files are"
+        + " downloaded again."
     )
     
     args = parser.parse_args()
@@ -59,5 +69,5 @@ if __name__ == "__main__":
         
     logger.debug("downloads will be saved to %s" % args.directory)
 
-    edgar.download_index(args.directory, args.year, args.ua)
+    edgar.download_index(args.directory, args.year, args.ua, args.skip)
     logger.info("Files downloaded in %s" % args.directory)
