@@ -19,7 +19,7 @@ Once `python-edgar` is finished downloading index files, you can open an index f
 `python-edgar` can be used as a library called from another python script, or as a standalone script.
 
 ## Features 
-- Compliant: Follows fair acces guidelines established by the SEC at https://www.sec.gov/os/accessing-edgar-data
+- Compliant: Follows fair access guidelines established by the SEC at https://www.sec.gov/os/accessing-edgar-data
 - Efficient: retrieve compressed archives instead of raw index file that are 10 times bigger
 - Import as a library in your python project or run as a standalone script 
 - Python 3 only with 0 external dependencies (Python 3 only as of v3.0.0)
