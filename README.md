@@ -36,7 +36,7 @@ pip install python-edgar
 Call the library
 ```python
 import edgar
-edgar.download_index(download_directory, since_year, user_agent, skip_all_present_except_last=False)
+edgar.download_index(dest, since_year, user_agent, skip_all_present_except_last=False)
 ```
 Output
 ```shell
